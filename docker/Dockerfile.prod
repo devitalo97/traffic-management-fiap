@@ -6,9 +6,7 @@ VOLUME /tmp
 
 EXPOSE 8080
 
-COPY ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar /app/app.jar
-
-RUN cat ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar
+COPY ../target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar /app/app.jar
 
 RUN cat ./app.jar
 
