@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    container_name: traffic-management
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile.local
+    ports:
+      - "8080:8080" # Mapeando a porta para acessar a aplicação
