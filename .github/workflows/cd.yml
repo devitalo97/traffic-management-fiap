@@ -60,6 +60,9 @@ jobs:
       - name: Listar arquivos no diretório target
         run: ls -l
 
+      - name: Listar arquivos no diretório target
+        run: ls -l target
+
       - name: Build e push das modificações
         id: docker_build
         uses: docker/build-push-action@v4
