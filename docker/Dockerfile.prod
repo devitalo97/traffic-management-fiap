@@ -4,10 +4,11 @@ FROM eclipse-temurin:21-alpine
 # Porta exposta
 EXPOSE 8080
 
-COPY . .
+# Definir diretório de trabalho para garantir que o JAR seja copiado corretamente
+WORKDIR /app
 
 # Copiar o arquivo JAR para o contêiner
 COPY ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar app.jar
 
-# Executar o JAR com o perfil de producao ativo
+# Executar o JAR com o perfil de produção ativo
 ENTRYPOINT ["java", "-jar", "/app.jar"]

@@ -23,9 +23,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
-      - name: Listar arquivos no diretório target
-        run: ls -l target
-
       - name: Upload .jar file as artifact
         uses: actions/upload-artifact@v3
         with:
@@ -38,17 +35,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Listar arquivos no diretório target
-        run: ls -l
-
       - name: Baixar o artefato .jar
         uses: actions/download-artifact@v3
         with:
           name: jar-file
           path: ./target # Baixar o artefato para a pasta ./target
 
-      - name: Listar arquivos no diretório target
-        run: ls -l
+      - name: Verificar arquivos no diretório target
+        run: ls -l ./target
 
       - name: Configurando o QEMU
         uses: docker/setup-qemu-action@v2
@@ -62,8 +56,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Listar arquivos no diretório target
-        run: ls -l target
+      - name: Verificar novamente os arquivos no diretório target (antes do build)
+        run: ls -l ./target
 
       - name: Build e push das modificações
         id: docker_build
