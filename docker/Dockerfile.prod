@@ -7,10 +7,6 @@ VOLUME /tmp
 # Porta exposta
 EXPOSE 8080
 
-RUN mkdir target
-
-COPY ./target ./target
-
 # Definir uma variável para o caminho do JAR
 COPY ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar ./app.jar
 
