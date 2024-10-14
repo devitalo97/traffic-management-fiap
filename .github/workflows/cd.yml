@@ -37,7 +37,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: jar-file
-          path: ./target
+          path: ./ # Baixar para o diretório atual
 
       - name: Configurando o QEMU
         uses: docker/setup-qemu-action@v2

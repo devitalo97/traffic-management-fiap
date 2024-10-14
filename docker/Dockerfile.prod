@@ -11,7 +11,7 @@ EXPOSE 8080
 ARG JAR_FILE=traffic_management_spring_boot-0.0.1-SNAPSHOT.jar
 
 # Copiar o arquivo JAR para o contêiner
-COPY target/${JAR_FILE} app.jar
+COPY ${JAR_FILE} /app.jar
 
 # Definir variáveis de ambiente específicas para o ambiente de produção
 ENV SPRING_PROFILES_ACTIVE=prod
