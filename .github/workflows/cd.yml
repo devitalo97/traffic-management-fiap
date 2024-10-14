@@ -37,6 +37,10 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v4
+
+      - name: Listar arquivos no diretório target
+        run: ls -l
+
       - name: Baixar o artefato .jar
         uses: actions/download-artifact@v3
         with:
@@ -57,9 +61,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Listar arquivos no diretório target
-        run: ls -l
 
       - name: Listar arquivos no diretório target
         run: ls -l target
