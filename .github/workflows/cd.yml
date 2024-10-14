@@ -46,9 +46,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Listar arquivos no diretório target
-        run: ls -l target
-
-      - name: Listar arquivos no diretório target
         run: ls -l
 
       - name: Build e push das modificações
