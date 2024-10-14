@@ -7,8 +7,14 @@ EXPOSE 8080
 # Definir diretório de trabalho para garantir que o JAR seja copiado corretamente
 WORKDIR /app
 
+# Listar arquivos no diretório antes da cópia para verificar se o Docker realmente enxerga o que precisa
+RUN ls -l ./target
+
 # Copiar o arquivo JAR para o contêiner
-COPY ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar app.jar
+COPY ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar /app/app.jar
+
+# Listar novamente o arquivo para garantir que ele foi copiado
+RUN ls -l /app
 
 # Executar o JAR com o perfil de produção ativo
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
