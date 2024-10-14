@@ -45,6 +45,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v4
         with:
+          context: .  # Adicionando o contexto de build correto
           file: ./docker/Dockerfile.prod
           push: true
           tags: rm93287/traffic_management:${{ github.sha }}
