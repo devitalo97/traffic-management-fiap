@@ -23,6 +23,12 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
 
+      - name: Listar arquivos no diretório target
+        run: ls -l target
+
+      - name: Listar arquivos no diretório target
+        run: ls -l
+
   docker:
     runs-on: ubuntu-latest
     needs: setup
