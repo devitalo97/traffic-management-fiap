@@ -26,13 +26,25 @@ jobs:
       - name: Listar arquivos no diretório target
         run: ls -l target
 
-      - name: Listar arquivos no diretório target
-        run: ls -l
+      - name: Upload .jar file as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: jar-file
+          path: target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar
 
   docker:
     runs-on: ubuntu-latest
     needs: setup
     steps:
+      - name: Baixar o artefato .jar
+        uses: actions/download-artifact@v3
+        with:
+          name: jar-file
+          path: ./target # Baixar o artefato para a pasta ./target
+
+      - name: Listar arquivos no diretório target
+        run: ls -l
+
       - name: Configurando o QEMU
         uses: docker/setup-qemu-action@v2
 
