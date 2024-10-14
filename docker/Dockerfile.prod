@@ -11,7 +11,7 @@ EXPOSE 8080
 
 COPY ./target ./target
 
-CAT ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar
+RUN cat ./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar
 
 # Definir uma variável para o caminho do JAR
 ARG JAR_FILE=./target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar
