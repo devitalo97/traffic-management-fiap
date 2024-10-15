@@ -3,8 +3,10 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   setup:
+    # Job responsável por configurar o ambiente e realizar o build do projeto com Maven
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -12,53 +14,64 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        # Step responsável por fazer o checkout do repositório. Necessário para os arquivos do repositório estejam disponíveis no pipeline. .
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          server-id: github
+          settings-path: ${{ github.workspace }}
+        # Step para configurar o JDK versão 17, necessário para compilar e rodar o projeto.
 
       - name: Build with Maven
         run: mvn clean package
+        # Step que executa o Maven para limpar qualquer build anterior e gerar um novo pacote .jar do projeto.
 
       - name: Upload .jar file as artifact
         uses: actions/upload-artifact@v3
         with:
           name: jar-file
           path: target/traffic_management_spring_boot-0.0.1-SNAPSHOT.jar
+        # Step que faz o upload do arquivo .jar gerado como artefato, para que possa ser utilizado em outros jobs.
 
   docker:
+    # Job responsável por construir e enviar a imagem Docker para o Docker Hub
     runs-on: ubuntu-latest
     needs: setup
     steps:
       - uses: actions/checkout@v4
+        # Step responsável por fazer o checkout do repositório. Necessário para os arquivos do repositório estejam disponíveis no pipeline. .
 
       - name: Baixar o artefato .jar
         uses: actions/download-artifact@v3
         with:
           name: jar-file
-          path: ./target # Baixar o artefato para a pasta ./target
+          path: ./target
+        # Step que faz o download do arquivo .jar previamente gerado e o salva no diretório ./target para ser incluído na imagem Docker.
 
       - name: Configurando o QEMU
         uses: docker/setup-qemu-action@v2
+        # Step para configurar o QEMU, que habilita a emulação de arquiteturas diferentes para construção de imagens Docker multiplataforma.
 
       - name: Configurando o Docker Buildx
         uses: docker/setup-buildx-action@v2
+        # Step para configurar o Docker Buildx, que permite construir imagens Docker.
 
       - name: Autenticando no Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+        # Step para fazer login no Docker Hub.
 
       - name: Build e push das modificações
         id: docker_build
         uses: docker/build-push-action@v4
         with:
-          context: .  # Adicionando o contexto de build correto
+          context: .
           file: ./docker/Dockerfile.prod
           push: true
           tags: rm93287/traffic_management:${{ github.sha }}
+        # Step para construir a imagem Docker usando o Dockerfile de produção e enviar a imagem gerada para o Docker Hub.
