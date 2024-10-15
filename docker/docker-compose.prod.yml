@@ -1,0 +1,7 @@
+version: '3'
+services:
+  app:
+    container_name: traffic-management
+    image: "rm93287/traffic_management:cdea2029939fbb965411c4ef4119b4cf3abf1080"
+    ports:
+      - "8080:8080" # Mapeando a porta para acessar a aplicação
